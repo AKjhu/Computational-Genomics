@@ -23,9 +23,13 @@ gtf = gffutils.create_db('<gtf>', dbfn = "genes.db", force=True, keep_order=True
 # Open input file for read access and result file for result storage
 input = pysam.AlignmentFile('<input>', "rb")
 result = pysam.AlignmentFile('<result>', "wb", template=input)
+# Iterates through every read in the input file
 for read in input.fetch():
+    # Create tuple containing chromosome, read start, and read end
     region = (read.reference_name, read.query_alignment_start, read.query_alignment_end)
+    # Check gtf and create list of genes
     for feature in gffutils.FeatureDB.region(region, completely_within=False):
+        # If gene is a protein coding gene, write the read to output file
         if feature.attributes["gene_biotype"][0] == "protein_coding":
             result.write(read)
             break
