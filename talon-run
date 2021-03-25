@@ -3,7 +3,7 @@
 # Filename variables, change during execution
 echo "Enter gtf filename"
 read gtf
-echo "Enter database prefix (will create file called <db_pref>.db)
+echo "Enter database prefix (will create file called <db_pref>.db)"
 read db_pref
 echo "Enter build name"
 read build
