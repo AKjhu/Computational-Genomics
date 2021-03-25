@@ -1,0 +1,32 @@
+#!/bin/bash
+
+# Filename variables, change during execution
+echo "Enter gtf filename"
+read gtf
+echo "Enter database prefix (will create file called <db_pref>.db)
+read db_pref
+echo "Enter build name"
+read build
+
+# Run talon_initialize_database                                                
+talon_initialize_database --f="${gtf}" --g="${build}" --o="${db_pref}"                        
+   
+
+# Run talon_label_reads
+echo "Enter BAM/SAM file of reads"
+read reads
+echo "Enter reference genome"
+read ref_genome
+talon_label_reads --f="${reads}" --g="${ref_genome}" --deleteTmp
+
+
+# Run talon
+database= "${db_pref}.db"
+echo "Enter config csv file"
+read config
+echo "Enter talon output file prefix"
+read output_pref
+talon --f=${config}" --db="${database}" --build="${build}" --o="${output_pref}"
+
+echo "Talon run complete"
+
